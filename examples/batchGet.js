@@ -1,21 +1,21 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     async  = require('async'),
     _      = require('lodash'),
-    AWS    = vogels.AWS,
+    AWS    = dynamo.AWS,
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-batch-get-account', {
+var Account = dynamo.define('example-batch-get-account', {
   hashKey : 'email',
   timestamps : true,
   schema : {
     email : Joi.string().email(),
     name  : Joi.string(),
     age   : Joi.number(),
-    roles : vogels.types.stringSet()
+    roles : dynamo.types.stringSet()
   }
 });
 
@@ -39,7 +39,7 @@ var loadSeedData = function (callback) {
 };
 
 async.series([
-  async.apply(vogels.createTables.bind(vogels)),
+  async.apply(dynamo.createTables.bind(dynamo)),
   loadSeedData
 ], function (err) {
   if(err) {

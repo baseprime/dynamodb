@@ -1,6 +1,6 @@
 'use strict';
 
-var vogels = require('../../index'),
+var dynamo = require('../../index'),
     chai   = require('chai'),
     expect = chai.expect,
     async  = require('async'),
@@ -74,16 +74,16 @@ describe('Vogels Integration Tests', function() {
   this.timeout(0);
 
   before(function (done) {
-    vogels.dynamoDriver(helper.realDynamoDB());
+    dynamo.dynamoDriver(helper.realDynamoDB());
 
-    User = vogels.define('vogels-int-test-user', {
+    User = dynamo.define('dynamo-int-test-user', {
       hashKey : 'id',
       schema : {
         id            : Joi.string().required().default(uuid.v4),
         email         : Joi.string().required(),
         name          : Joi.string().allow(''),
         age           : Joi.number().min(10),
-        roles         : vogels.types.stringSet().default(['user']),
+        roles         : dynamo.types.stringSet().default(['user']),
         acceptedTerms : Joi.boolean().default(false),
         things        : Joi.array(),
         settings : {
@@ -95,12 +95,12 @@ describe('Vogels Integration Tests', function() {
       }
     });
 
-    Tweet = vogels.define('vogels-int-test-tweet', {
+    Tweet = dynamo.define('dynamo-int-test-tweet', {
       hashKey  : 'UserId',
       rangeKey : 'TweetID',
       schema : {
         UserId            : Joi.string(),
-        TweetID           : vogels.types.uuid(),
+        TweetID           : dynamo.types.uuid(),
         content           : Joi.string(),
         num               : Joi.number(),
         tag               : Joi.string(),
@@ -111,14 +111,14 @@ describe('Vogels Integration Tests', function() {
       ]
     });
 
-    Movie = vogels.define('vogels-int-test-movie', {
+    Movie = dynamo.define('dynamo-int-test-movie', {
       hashKey : 'title',
       timestamps : true,
       schema : {
         title       : Joi.string(),
         description : Joi.string(),
         releaseYear : Joi.number(),
-        tags        : vogels.types.stringSet(),
+        tags        : dynamo.types.stringSet(),
         director    : Joi.object().keys({
           firstName : Joi.string(),
           lastName  : Joi.string(),
@@ -132,7 +132,7 @@ describe('Vogels Integration Tests', function() {
       }
     });
 
-    DynamicKeyModel = vogels.define('vogels-int-test-dyn-key', {
+    DynamicKeyModel = dynamo.define('dynamo-int-test-dyn-key', {
       hashKey  : 'id',
       schema : Joi.object().keys({
         id : Joi.string()
@@ -140,7 +140,7 @@ describe('Vogels Integration Tests', function() {
     });
 
     async.series([
-      async.apply(vogels.createTables.bind(vogels)),
+      async.apply(dynamo.createTables.bind(dynamo)),
       function (callback) {
         var items = [{fiz : 3, buz : 5, fizbuz: 35}];
         User.create({id : '123456789', email : 'some@user.com', age: 30, settings : {nickname : 'thedude'}, things : items}, callback);
@@ -399,7 +399,7 @@ describe('Vogels Integration Tests', function() {
         ':current' : 2001,
         ':title' : ['The Man'],
         ':firstName' : 'Rob',
-        ':tag' : vogels.Set(['Sports', 'Horror'], 'S')
+        ':tag' : dynamo.Set(['Sports', 'Horror'], 'S')
       };
 
       Movie.update({title : 'Movie 0', description : 'This is a description'}, params, function (err, mov) {
@@ -914,7 +914,7 @@ describe('Vogels Integration Tests', function() {
     var ModelCustomTimestamps;
 
     before(function (done) {
-      Model = vogels.define('vogels-int-test-timestamp', {
+      Model = dynamo.define('dynamo-int-test-timestamp', {
         hashKey : 'id',
         timestamps : true,
         schema : {
@@ -922,7 +922,7 @@ describe('Vogels Integration Tests', function() {
         }
       });
 
-      ModelCustomTimestamps = vogels.define('vogels-int-test-timestamp-custom', {
+      ModelCustomTimestamps = dynamo.define('dynamo-int-test-timestamp-custom', {
         hashKey : 'id',
         timestamps : true,
         createdAt : 'created',
@@ -933,7 +933,7 @@ describe('Vogels Integration Tests', function() {
       });
 
 
-      return vogels.createTables(done);
+      return dynamo.createTables(done);
     });
 
     it('should add createdAt param', function (done) {

@@ -1,20 +1,20 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     _      = require('lodash'),
     util   = require('util'),
-    AWS    = vogels.AWS,
+    AWS    = dynamo.AWS,
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('Foobar', {
+var Account = dynamo.define('Foobar', {
   hashKey : 'email',
   schema : {
     email   : Joi.string(),
     name    : Joi.string(),
     age     : Joi.number(),
-    scores  : vogels.types.numberSet(),
+    scores  : dynamo.types.numberSet(),
     created : Joi.date().default(Date.now),
     list    : Joi.array(),
     settings : {
@@ -45,7 +45,7 @@ var printScanResults = function (err, data) {
   }
 };
 
-vogels.createTables(function (err) {
+dynamo.createTables(function (err) {
   if(err) {
     console.log('failed to create table', err);
   }

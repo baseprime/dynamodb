@@ -1,21 +1,21 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     util   = require('util'),
     _      = require('lodash'),
     async  = require('async'),
     Joi    = require('joi'),
-    AWS    = vogels.AWS;
+    AWS    = dynamo.AWS;
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Movie = vogels.define('example-nested-attribute', {
+var Movie = dynamo.define('example-nested-attribute', {
   hashKey : 'title',
   timestamps : true,
   schema : {
     title       : Joi.string(),
     releaseYear : Joi.number(),
-    tags        : vogels.types.stringSet(),
+    tags        : dynamo.types.stringSet(),
     director    : Joi.object().keys({
       firstName : Joi.string(),
       lastName  : Joi.string(),
@@ -93,14 +93,14 @@ var runExample = function () {
     ':current' : 2001,
     ':title' : ['The Man'],
     ':firstName' : 'Rob',
-    ':tag' : vogels.Set(['Sports', 'Horror'], 'S')
+    ':tag' : dynamo.Set(['Sports', 'Horror'], 'S')
   };
 
   Movie.update({title : 'Movie 0'}, params, printResults);
 };
 
 async.series([
-  async.apply(vogels.createTables.bind(vogels)),
+  async.apply(dynamo.createTables.bind(dynamo)),
   loadSeedData
 ], function (err) {
   if(err) {

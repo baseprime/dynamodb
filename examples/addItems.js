@@ -1,24 +1,24 @@
 'use strict';
 
-var vogels = require('../index'),
-    AWS    = vogels.AWS,
+var dynamo = require('../index'),
+    AWS    = dynamo.AWS,
     Joi    = require('joi'),
     async  = require('async');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-Account', {
+var Account = dynamo.define('example-Account', {
   hashKey : 'AccountId',
   timestamps : true,
   schema : {
-    AccountId : vogels.types.uuid(),
+    AccountId : dynamo.types.uuid(),
     name : Joi.string(),
     email : Joi.string().email(),
     age : Joi.number(),
   }
 });
 
-vogels.createTables({
+dynamo.createTables({
   'example-Account'  : {readCapacity: 1, writeCapacity: 10},
 }, function (err) {
   if(err) {

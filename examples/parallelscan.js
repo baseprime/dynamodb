@@ -1,18 +1,18 @@
 'use strict';
 
-var vogels = require('../index'),
-    AWS    = vogels.AWS,
+var dynamo = require('../index'),
+    AWS    = dynamo.AWS,
     _      = require('lodash'),
     Joi    = require('joi'),
     async  = require('async');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Product = vogels.define('example-parallel-scan', {
+var Product = dynamo.define('example-parallel-scan', {
   hashKey : 'id',
   timestamps : true,
   schema : {
-    id        : vogels.types.uuid(),
+    id        : dynamo.types.uuid(),
     accountId : Joi.number(),
     purchased : Joi.boolean().default(false),
     price     : Joi.number()
@@ -56,7 +56,7 @@ var runParallelScan = function () {
 };
 
 async.series([
-  async.apply(vogels.createTables.bind(vogels)),
+  async.apply(dynamo.createTables.bind(dynamo)),
   loadSeedData
 ], function (err) {
   if(err) {

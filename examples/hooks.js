@@ -1,12 +1,12 @@
 'use strict';
 
-var vogels = require('../index'),
-    AWS    = vogels.AWS,
+var dynamo = require('../index'),
+    AWS    = dynamo.AWS,
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-hook', {
+var Account = dynamo.define('example-hook', {
   hashKey : 'email',
   timestamps : true,
   schema : {
@@ -41,7 +41,7 @@ Account.after('destroy', function (item) {
   console.log('Account destroyed', item.get());
 });
 
-vogels.createTables(function (err) {
+dynamo.createTables(function (err) {
   if(err) {
     console.log('Error creating tables', err);
     process.exit(1);

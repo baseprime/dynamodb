@@ -1,15 +1,15 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     util   = require('util'),
     _      = require('lodash'),
     Joi    = require('joi'),
     async  = require('async'),
-    AWS    = vogels.AWS;
+    AWS    = dynamo.AWS;
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-query-filter', {
+var Account = dynamo.define('example-query-filter', {
   hashKey : 'name',
   rangeKey : 'email',
   timestamps : true,
@@ -17,7 +17,7 @@ var Account = vogels.define('example-query-filter', {
     name  : Joi.string(),
     email : Joi.string().email(),
     age   : Joi.number(),
-    roles : vogels.types.stringSet(),
+    roles : dynamo.types.stringSet(),
   },
 
   indexes : [
@@ -78,7 +78,7 @@ var runFilterQueries = function () {
 };
 
 async.series([
-  async.apply(vogels.createTables.bind(vogels)),
+  async.apply(dynamo.createTables.bind(dynamo)),
   loadSeedData
 ], function (err) {
   if(err) {

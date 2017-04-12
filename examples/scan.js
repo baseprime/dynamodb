@@ -1,15 +1,15 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     util   = require('util'),
     _      = require('lodash'),
-    AWS    = vogels.AWS,
+    AWS    = dynamo.AWS,
     async  = require('async'),
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-scan', {
+var Account = dynamo.define('example-scan', {
   hashKey : 'name',
   rangeKey : 'email',
   timestamps : true,
@@ -17,7 +17,7 @@ var Account = vogels.define('example-scan', {
     name  : Joi.string(),
     email : Joi.string().email(),
     age   : Joi.number(),
-    scores : vogels.types.numberSet(),
+    scores : dynamo.types.numberSet(),
   },
 });
 
@@ -75,7 +75,7 @@ var runScans = function () {
 };
 
 async.series([
-  async.apply(vogels.createTables.bind(vogels)),
+  async.apply(dynamo.createTables.bind(dynamo)),
   loadSeedData
 ], function (err) {
   if(err) {

@@ -1,12 +1,12 @@
 'use strict';
 
-var vogels = require('../index'),
-    AWS    = vogels.AWS,
+var dynamo = require('../index'),
+    AWS    = dynamo.AWS,
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-vogels.define('example-Account', {
+dynamo.define('example-Account', {
   hashKey  : 'name',
   rangeKey : 'email',
   schema : {
@@ -19,7 +19,7 @@ vogels.define('example-Account', {
   ]
 });
 
-vogels.define('example-GameScore', {
+dynamo.define('example-GameScore', {
   hashKey  : 'userId',
   rangeKey : 'gameTitle',
   schema : {
@@ -39,7 +39,7 @@ vogels.define('example-GameScore', {
   }]
 });
 
-vogels.createTables({
+dynamo.createTables({
   'Account'   : {readCapacity: 1, writeCapacity: 1},
   'GameScore' : {readCapacity: 1, writeCapacity: 1}
 }, function (err) {

@@ -95,7 +95,7 @@ exports.randomName = function (prefix) {
 
 exports.testLogger = function() {
   return bunyan.createLogger({
-    name: 'vogels-tests',
+    name: 'dynamo-tests',
     serializers : {err: bunyan.stdSerializers.err},
     level : bunyan.FATAL
   });

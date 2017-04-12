@@ -1,12 +1,12 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     Joi    = require('joi'),
-    AWS    = vogels.AWS;
+    AWS    = dynamo.AWS;
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Product = vogels.define('example-streaming-Product', {
+var Product = dynamo.define('example-streaming-Product', {
   hashKey : 'ProductId',
   timestamps : true,
   schema : {

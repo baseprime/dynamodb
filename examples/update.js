@@ -1,24 +1,24 @@
 'use strict';
 
-var vogels = require('../index'),
-    AWS    = vogels.AWS,
+var dynamo = require('../index'),
+    AWS    = dynamo.AWS,
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-update', {
+var Account = dynamo.define('example-update', {
   hashKey : 'email',
   timestamps : true,
   schema : {
     email : Joi.string().email(),
     name  : Joi.string(),
     age   : Joi.number(),
-    nicknames : vogels.types.stringSet(),
+    nicknames : dynamo.types.stringSet(),
     nested : Joi.object()
   }
 });
 
-vogels.createTables(function (err) {
+dynamo.createTables(function (err) {
   if(err) {
     console.log('Error creating tables', err);
     process.exit(1);

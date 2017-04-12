@@ -1,15 +1,15 @@
 'use strict';
 
-var vogels = require('../index'),
-    AWS    = vogels.AWS,
+var dynamo = require('../index'),
+    AWS    = dynamo.AWS,
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Person = vogels.define('example-optional-attribute', {
+var Person = dynamo.define('example-optional-attribute', {
   hashKey : 'id',
   schema : {
-    id : vogels.types.uuid(),
+    id : dynamo.types.uuid(),
     name : Joi.string().allow(null)
   }
 });
@@ -24,7 +24,7 @@ var printInfo = function (err, person) {
   }
 };
 
-vogels.createTables( function (err) {
+dynamo.createTables( function (err) {
   if(err) {
     console.log('Failed to create table', err);
     process.exit(1);

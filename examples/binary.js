@@ -1,13 +1,13 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     fs     = require('fs'),
-    AWS    = vogels.AWS,
+    AWS    = dynamo.AWS,
     Joi    = require('joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var BinModel = vogels.define('example-binary', {
+var BinModel = dynamo.define('example-binary', {
   hashKey : 'name',
   timestamps : true,
   schema : {
@@ -26,7 +26,7 @@ var printFileInfo = function (err, file) {
   }
 };
 
-vogels.createTables(function (err) {
+dynamo.createTables(function (err) {
   if(err) {
     console.log('Error creating tables', err);
     process.exit(1);

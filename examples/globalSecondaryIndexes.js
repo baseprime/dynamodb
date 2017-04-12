@@ -1,9 +1,9 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     _      = require('lodash'),
     util   = require('util'),
-    AWS    = vogels.AWS,
+    AWS    = dynamo.AWS,
     Joi    = require('joi'),
     async  = require('async');
 
@@ -13,7 +13,7 @@ var vogels = require('../index'),
 
 AWS.config.update({region : 'us-east-1'});
 
-var GameScore = vogels.define('example-global-index', {
+var GameScore = dynamo.define('example-global-index', {
   hashKey : 'userId',
   rangeKey : 'gameTitle',
   schema : {
@@ -58,7 +58,7 @@ var loadSeedData = function (callback) {
 };
 
 async.series([
-  async.apply(vogels.createTables.bind(vogels)),
+  async.apply(dynamo.createTables.bind(dynamo)),
   loadSeedData
 ], function (err) {
   if(err) {

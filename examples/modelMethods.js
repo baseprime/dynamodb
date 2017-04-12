@@ -1,12 +1,12 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     Joi    = require('joi'),
-    AWS    = vogels.AWS;
+    AWS    = dynamo.AWS;
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-model-methods-Account', {
+var Account = dynamo.define('example-model-methods-Account', {
   hashKey : 'email',
   timestamps : true,
   schema : {

@@ -1,15 +1,15 @@
 'use strict';
 
-var vogels = require('../index'),
+var dynamo = require('../index'),
     util   = require('util'),
     _      = require('lodash'),
     async  = require('async'),
     Joi    = require('joi'),
-    AWS    = vogels.AWS;
+    AWS    = dynamo.AWS;
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 
-var Account = vogels.define('example-query', {
+var Account = dynamo.define('example-query', {
   hashKey : 'name',
   rangeKey : 'email',
   timestamps : true,
@@ -81,7 +81,7 @@ var runQueries = function () {
 };
 
 async.series([
-  async.apply(vogels.createTables.bind(vogels)),
+  async.apply(dynamo.createTables.bind(dynamo)),
   loadSeedData
 ], function (err) {
   if(err) {

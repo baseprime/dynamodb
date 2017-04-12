@@ -1,6 +1,6 @@
 'use strict';
 
-var vogels = require('../../index'),
+var dynamo = require('../../index'),
     chai   = require('chai'),
     expect = chai.expect,
     //async  = require('async'),
@@ -14,17 +14,17 @@ describe('Create Tables Integration Tests', function() {
   this.timeout(0);
 
   before(function () {
-    vogels.dynamoDriver(helper.realDynamoDB());
+    dynamo.dynamoDriver(helper.realDynamoDB());
   });
 
   afterEach(function () {
-    vogels.reset();
+    dynamo.reset();
   });
 
   it('should create table with hash key', function (done) {
-    var Model = vogels.define('vogels-create-table-test', {
+    var Model = dynamo.define('dynamo-create-table-test', {
       hashKey : 'id',
-      tableName : helper.randomName('vogels-createtable-Accounts'),
+      tableName : helper.randomName('dynamo-createtable-Accounts'),
       schema : {
         id : Joi.string(),
       }
@@ -46,10 +46,10 @@ describe('Create Tables Integration Tests', function() {
   });
 
   it('should create table with hash and range key', function (done) {
-    var Model = vogels.define('vogels-createtable-rangekey', {
+    var Model = dynamo.define('dynamo-createtable-rangekey', {
       hashKey : 'name',
       rangeKey : 'age',
-      tableName : helper.randomName('vogels-createtable-rangekey'),
+      tableName : helper.randomName('dynamo-createtable-rangekey'),
       schema : {
         name : Joi.string(),
         age : Joi.number(),
@@ -78,10 +78,10 @@ describe('Create Tables Integration Tests', function() {
   });
 
   it('should create table with local secondary index', function (done) {
-    var Model = vogels.define('vogels-createtable-rangekey', {
+    var Model = dynamo.define('dynamo-createtable-rangekey', {
       hashKey : 'name',
       rangeKey : 'age',
-      tableName : helper.randomName('vogels-createtable-local-idx'),
+      tableName : helper.randomName('dynamo-createtable-local-idx'),
       schema : {
         name : Joi.string(),
         age : Joi.number(),
@@ -136,10 +136,10 @@ describe('Create Tables Integration Tests', function() {
   });
 
   it('should create table with local secondary index with custom projection', function (done) {
-    var Model = vogels.define('vogels-createtable-local-proj', {
+    var Model = dynamo.define('dynamo-createtable-local-proj', {
       hashKey : 'name',
       rangeKey : 'age',
-      tableName : helper.randomName('vogels-createtable-local-proj'),
+      tableName : helper.randomName('dynamo-createtable-local-proj'),
       schema : {
         name : Joi.string(),
         age : Joi.number(),
@@ -185,10 +185,10 @@ describe('Create Tables Integration Tests', function() {
   });
 
   it('should create table with global index', function (done) {
-    var Model = vogels.define('vogels-createtable-global', {
+    var Model = dynamo.define('dynamo-createtable-global', {
       hashKey : 'name',
       rangeKey : 'age',
-      tableName : helper.randomName('vogels-createtable-global'),
+      tableName : helper.randomName('dynamo-createtable-global'),
       schema : {
         name : Joi.string(),
         age : Joi.number(),
@@ -228,10 +228,10 @@ describe('Create Tables Integration Tests', function() {
   });
 
   it('should create table with global index with optional settings', function (done) {
-    var Model = vogels.define('vogels-createtable-global', {
+    var Model = dynamo.define('dynamo-createtable-global', {
       hashKey : 'name',
       rangeKey : 'age',
-      tableName : helper.randomName('vogels-createtable-global'),
+      tableName : helper.randomName('dynamo-createtable-global'),
       schema : {
         name : Joi.string(),
         age  : Joi.number(),
@@ -279,10 +279,10 @@ describe('Create Tables Integration Tests', function() {
   });
 
   it('should create table with global and local indexes', function (done) {
-    var Model = vogels.define('vogels-createtable-both-indexes', {
+    var Model = dynamo.define('dynamo-createtable-both-indexes', {
       hashKey : 'name',
       rangeKey : 'age',
-      tableName : helper.randomName('vogels-createtable-both-indexes'),
+      tableName : helper.randomName('dynamo-createtable-both-indexes'),
       schema : {
         name : Joi.string(),
         age  : Joi.number(),
@@ -364,37 +364,37 @@ describe('Update Tables Integration Tests', function() {
       tableName;
 
   before(function (done) {
-    vogels.dynamoDriver(helper.realDynamoDB());
+    dynamo.dynamoDriver(helper.realDynamoDB());
 
-    tableName = helper.randomName('vogels-updateTable-Tweets');
+    tableName = helper.randomName('dynamo-updateTable-Tweets');
 
-    Tweet = vogels.define('vogels-update-table-test', {
+    Tweet = dynamo.define('dynamo-update-table-test', {
       hashKey  : 'UserId',
       rangeKey : 'TweetID',
       tableName : tableName,
       schema : {
         UserId            : Joi.string(),
-        TweetID           : vogels.types.uuid(),
+        TweetID           : dynamo.types.uuid(),
         content           : Joi.string(),
         PublishedDateTime : Joi.date().default(Date.now)
       }
     });
 
-    vogels.createTables(done);
+    dynamo.createTables(done);
   });
 
   afterEach(function () {
-    vogels.reset();
+    dynamo.reset();
   });
 
   it('should add global secondary index', function (done) {
-    Tweet = vogels.define('vogels-update-table-test', {
+    Tweet = dynamo.define('dynamo-update-table-test', {
       hashKey  : 'UserId',
       rangeKey : 'TweetID',
       tableName : tableName,
       schema : {
         UserId            : Joi.string(),
-        TweetID           : vogels.types.uuid(),
+        TweetID           : dynamo.types.uuid(),
         content           : Joi.string(),
         PublishedDateTime : Joi.date().default(Date.now)
       },
