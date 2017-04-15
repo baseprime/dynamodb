@@ -48,6 +48,31 @@ describe('Query', function () {
       });
     });
 
+    it('should run query against table using promises', function (done) {
+      var config = {
+        hashKey: 'name',
+        rangeKey: 'email',
+        schema : {
+          name : Joi.string(),
+          email : Joi.string()
+        }
+      };
+
+      table.schema = new Schema(config);
+
+      table.runQuery.yields(null, { name: 'tim', email: 'tim@example.com' });
+
+      new Query('tim', table, serializer).exec().promise()
+       .catch(function () {
+          assert(false, 'Catch should not be called');
+          done();
+        })
+        .then(function (results) {
+          results.should.eql([ { name: 'tim', email: 'tim@example.com' } ]);
+          done();
+        });
+    });
+
     it('should return error', function (done) {
       var config = {
         hashKey: 'name',
@@ -97,6 +122,36 @@ describe('Query', function () {
         assert(false, 'readable should not be called');
       });
 
+    });
+
+    it('should promisify an error', function (done) {
+      var config = {
+        hashKey: 'name',
+        rangeKey: 'email',
+        schema : {
+          name : Joi.string(),
+          email : Joi.string()
+        }
+      };
+
+      var s = new Schema(config);
+
+      var t = new Table('accounts', s, Serializer, helper.mockDocClient(), helper.testLogger());
+
+      t.docClient.query.yields(new Error('Fail'));
+
+      var promise = new Query('tim', t, Serializer).exec().promise();
+
+      assert(typeof promise.then === 'function' && typeof promise.catch === 'function', 'Promise returned wasn\'t a promise.');
+
+      promise
+        .then(function () {
+          assert(false, 'then should not be called');
+        })
+        .catch(function (err) {
+          expect(err).to.exist;
+          return done();
+        });
     });
 
     it('should stream data after handling retryable error', function (done) {

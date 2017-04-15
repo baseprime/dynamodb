@@ -62,4 +62,22 @@ describe('ParallelScan', function() {
 
   });
 
+  it('should promisify an error', function (done) {
+    var scan = new ParallelScan(table, serializer, 4);
+
+    table.docClient.scan.yields(new Error('fail'));
+
+    var promise = scan.exec().promise();
+    assert(typeof promise.then === 'function' && typeof promise.catch === 'function', 'Promise returned wasn\'t a promise.');
+
+    promise
+      .then(function () {
+        assert(false, 'then should not be called');
+      })
+      .catch(function (err) {
+        expect(err).to.exist;
+        return done();
+      });
+  });
+
 });
