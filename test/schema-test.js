@@ -168,7 +168,7 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/hashKey is required/);
+      }).to.throw(/"hashKey" is required/);
 
     });
 
@@ -221,7 +221,7 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/hashKey must be one of context:hashKey/);
+      }).to.throw(/"hashKey" must be one of \[context:hashKey\]/);
     });
 
     it('should setup global index', function () {
@@ -247,7 +247,7 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/hashKey is required/);
+      }).to.throw(/"hashKey" is required/);
     });
 
     it('should parse schema data types', function () {
@@ -255,10 +255,10 @@ describe('schema', function () {
         hashKey : 'foo',
         schema : Joi.object().keys({
           foo  : Joi.string().default('foobar'),
-          date : Joi.date().default(Date.now),
+          date : Joi.date().default(Date.now, 'Using Date.now()'),
           count: Joi.number(),
           flag: Joi.boolean(),
-          nums : Joi.array().includes(Joi.number()).meta({dynamoType : 'NS'}),
+          nums : Joi.array().items(Joi.number()).meta({dynamoType : 'NS'}),
           items : Joi.array(),
           data : Joi.object().keys({
             stuff : Joi.array().meta({dynamoType : 'SS'}),
@@ -425,7 +425,7 @@ describe('schema', function () {
         hashKey : 'email',
         schema : {
           email : Joi.string(),
-          name  : Joi.string().default('Foo Bar').required(),
+          name  : Joi.string().default('Foo Bar'),
           age   : Joi.number().default(3)
         }
       };
@@ -446,10 +446,10 @@ describe('schema', function () {
         hashKey : 'email',
         schema : {
           email   : Joi.string(),
-          created : Joi.date().default(Date.now),
+          created : Joi.date().default(Date.now, 'Data.now()'),
           data : {
             name : Joi.string().default('Tim Tester'),
-            nick : Joi.string().default(_.constant('foo bar'))
+            nick : Joi.string().default(_.constant('foo bar'), 'using constant')
           }
         }
       };
