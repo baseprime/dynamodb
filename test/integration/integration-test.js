@@ -70,7 +70,7 @@ internals.loadSeedData = function (callback) {
   ], callback);
 };
 
-describe('Vogels Integration Tests', function() {
+describe('DynamoDB Integration Tests', function() {
   this.timeout(0);
 
   before(function (done) {
