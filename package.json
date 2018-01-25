@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "async": "1.5.x",
-    "aws-sdk": "^2.x.x",
+    "aws-sdk": "^2.186.x",
     "bunyan": "1.5.x",
     "joi": "10.x.x",
     "lodash": "4.x.x",
