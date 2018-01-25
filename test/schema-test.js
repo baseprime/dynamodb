@@ -168,7 +168,7 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/hashKey is required/);
+      }).to.throw(/Invalid table schema/);
 
     });
 
@@ -221,7 +221,7 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/hashKey must be one of context:hashKey/);
+      }).to.throw(/Invalid table schema/);
     });
 
     it('should setup global index', function () {
@@ -247,7 +247,7 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/hashKey is required/);
+      }).to.throw(/Invalid table schema/);
     });
 
     it('should parse schema data types', function () {
@@ -255,10 +255,10 @@ describe('schema', function () {
         hashKey : 'foo',
         schema : Joi.object().keys({
           foo  : Joi.string().default('foobar'),
-          date : Joi.date().default(Date.now),
+          date : Joi.date().default(Date.now, 'Date'),
           count: Joi.number(),
           flag: Joi.boolean(),
-          nums : Joi.array().includes(Joi.number()).meta({dynamoType : 'NS'}),
+          nums : Joi.array().items(Joi.number()).meta({dynamoType : 'NS'}),
           items : Joi.array(),
           data : Joi.object().keys({
             stuff : Joi.array().meta({dynamoType : 'SS'}),
@@ -425,7 +425,7 @@ describe('schema', function () {
         hashKey : 'email',
         schema : {
           email : Joi.string(),
-          name  : Joi.string().default('Foo Bar').required(),
+          name  : Joi.string().default('Foo Bar'),
           age   : Joi.number().default(3)
         }
       };
@@ -435,8 +435,8 @@ describe('schema', function () {
       var d = s.applyDefaults({email: 'foo@bar.com'});
 
       d.email.should.equal('foo@bar.com');
-      d.name.should.equal('Foo Bar');
       d.age.should.equal(3);
+      d.name.should.equal('Foo Bar');
     });
 
     it('should return result of default functions', function () {
@@ -446,10 +446,10 @@ describe('schema', function () {
         hashKey : 'email',
         schema : {
           email   : Joi.string(),
-          created : Joi.date().default(Date.now),
+          created : Joi.date().default(Date.now, 'Date.now'),
           data : {
             name : Joi.string().default('Tim Tester'),
-            nick : Joi.string().default(_.constant('foo bar'))
+            nick : Joi.string().default(_.constant('foo bar'), '_')
           }
         }
       };
