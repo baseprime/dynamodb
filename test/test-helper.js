@@ -9,7 +9,7 @@ var sinon  = require('sinon'),
 exports.mockDynamoDB = function () {
   var opts = { apiVersion: '2012-08-10' };
   if(!process.env.USE_LOCAL_DYNAMO) {
-    opts.endpoint = 'http://127.0.0.1:8000';
+    opts.endpoint = 'http://localhost:8000';
   }
   var db = new AWS.DynamoDB(opts);
 
@@ -32,7 +32,7 @@ exports.mockDynamoDB = function () {
 exports.realDynamoDB = function () {
   var opts = { apiVersion: '2012-08-10' };
   if(!process.env.USE_LOCAL_DYNAMO) {
-    opts.endpoint = 'http://127.0.0.1:8000';
+    opts.endpoint = 'http://localhost:8000';
   }
   return new AWS.DynamoDB(opts);
 };

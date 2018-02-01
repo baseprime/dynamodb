@@ -1,3 +1,5 @@
 machine:
   services:
     - docker
+  post:
+    - npm run dynamodb-local
