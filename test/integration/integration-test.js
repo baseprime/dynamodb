@@ -70,16 +70,21 @@ internals.loadSeedData = function (callback) {
   ], callback);
 };
 
-describe('Vogels Integration Tests', function() {
+describe('DynamoDB Integration Tests', function() {
   this.timeout(0);
 
   before(function (done) {
+
+    function generateId () {
+      return uuid.v4();
+    }
+
     dynamo.dynamoDriver(helper.realDynamoDB());
 
     User = dynamo.define('dynamo-int-test-user', {
       hashKey : 'id',
       schema : {
-        id            : Joi.string().required().default(uuid.v4),
+        id            : Joi.string().default(generateId, 'uuid.v4'),
         email         : Joi.string().required(),
         name          : Joi.string().allow(''),
         age           : Joi.number().min(10),
@@ -104,7 +109,7 @@ describe('Vogels Integration Tests', function() {
         content           : Joi.string(),
         num               : Joi.number(),
         tag               : Joi.string(),
-        PublishedDateTime : Joi.date().default(Date.now)
+        PublishedDateTime : Joi.date().default(Date.now, 'Date.now()')
       },
       indexes : [
         { hashKey : 'UserId', rangeKey : 'PublishedDateTime', type : 'local', name : 'PublishedDateTimeIndex'}
@@ -124,7 +129,7 @@ describe('Vogels Integration Tests', function() {
           lastName  : Joi.string(),
           titles    : Joi.array()
         }),
-        actors : Joi.array().includes(Joi.object().keys({
+        actors : Joi.array().items(Joi.object().keys({
           firstName : Joi.string(),
           lastName  : Joi.string(),
           titles    : Joi.array()
