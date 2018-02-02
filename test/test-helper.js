@@ -7,7 +7,7 @@ var sinon  = require('sinon'),
     bunyan = require('bunyan');
 
 exports.mockDynamoDB = function () {
-  var opts = { apiVersion: '2012-08-10' };
+  var opts = { apiVersion: '2012-08-10', region: 'us-west-1' };
   if(!process.env.USE_LOCAL_DYNAMO) {
     opts.endpoint = 'http://localhost:8000';
   }
@@ -30,7 +30,7 @@ exports.mockDynamoDB = function () {
 };
 
 exports.realDynamoDB = function () {
-  var opts = { apiVersion: '2012-08-10' };
+  var opts = { apiVersion: '2012-08-10', region: 'us-west-1' };
   if(!process.env.USE_LOCAL_DYNAMO) {
     opts.endpoint = 'http://localhost:8000';
   }
