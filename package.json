@@ -29,7 +29,8 @@
     "bunyan": "1.5.x",
     "joi": "10.6.x",
     "lodash": "4.x.x",
-    "node-uuid": "1.4.x"
+    "node-uuid": "1.4.x",
+    "promise": "^8.0.1"
   },
   "devDependencies": {
     "chai": "1.x.x",
