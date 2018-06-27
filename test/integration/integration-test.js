@@ -6,7 +6,7 @@ var dynamo = require('../../index'),
     async  = require('async'),
     _      = require('lodash'),
     helper = require('../test-helper'),
-    uuid   = require('node-uuid'),
+    uuidv4 = require('uuid/v4'),
     Joi    = require('joi');
 
 chai.should();
@@ -76,7 +76,7 @@ describe('DynamoDB Integration Tests', function() {
   before(function (done) {
 
     function generateId () {
-      return uuid.v4();
+      return uuidv4();
     }
 
     dynamo.dynamoDriver(helper.realDynamoDB());
