@@ -39,17 +39,25 @@ dynamo.AWS.config.update({accessKeyId: 'AKID', secretAccessKey: 'SECRET', region
 
 Currently the following region codes are available in Amazon:
 
-|      Code      |           Name           |
-| -------------- | ------------------------ |
-| ap-northeast-1 | Asia Pacific (Tokyo)     |
-| ap-southeast-1 | Asia Pacific (Singapore) |
-| ap-southeast-2 | Asia Pacific (Sydney)    |
-| eu-central-1   | EU (Frankfurt)           |
-| eu-west-1      | EU (Ireland)             |
-| sa-east-1      | South America (Sao Paulo)|
-| us-east-1      | US East (N. Virginia)    |
-| us-west-1      | US West (N. California)  |
-| us-west-2      | US West (Oregon)         |
+|      Code      |           Name            |
+| -------------- | ------------------------- |
+| ap-northeast-1 | Asia Pacific (Tokyo)      |
+| ap-northeast-2 | Asia Pacific (Seoul)      |
+| ap-northeast-3 | Asia Pacific(Osaka-Local) |
+| ap-southeast-1 | Asia Pacific (Singapore)  |
+| ap-southeast-2 | Asia Pacific (Sydney)     |
+| ap-south-1     | Asia Pacific (Mumbai)     |
+| sa-east-1      | South America (São Paulo) |
+| eu-central-1   | EU (Frankfurt)            |
+| ca-central-1   | Canada (Central)          |
+| eu-west-1      | EU (Ireland)              |
+| eu-west-2      | EU (London)               |
+| eu-west-3      | EU (Paris)                |
+| sa-east-1      | South America (Sao Paulo) |
+| us-east-1      | US East (N. Virginia)     |
+| us-east-2      | US East (Ohio)            |
+| us-west-1      | US West (N. California)   |
+| us-west-2      | US West (Oregon)          |
 
 ### Define a Model
 Models are defined through the toplevel define method.
@@ -269,8 +277,8 @@ hashkeys.
 
 ```js
 BlogPost.create({
-  email: 'werner@example.com', 
-  title: 'Expanding the Cloud', 
+  email: 'werner@example.com',
+  title: 'Expanding the Cloud',
   content: 'Today, we are excited to announce the limited preview...'
   }, function (err, post) {
     console.log('created blog post', post.get('title'));
@@ -658,7 +666,7 @@ var GameScore = dynamo.define('GameScore', {
 });
 ```
 
-Now we can query against the global index 
+Now we can query against the global index
 
 ```js
 GameScore
@@ -670,7 +678,7 @@ GameScore
 
 When can also configure the attributes projected into the index.
 By default all attributes will be projected when no Projection parameter is
-present 
+present
 
 ```js
 var GameScore = dynamo.define('GameScore', {
@@ -769,7 +777,7 @@ This api is very similar to the query api.
 Account.scan().exec(callback);
 
 // scan all accounts, this time loading all results
-// note this will potentially make several calls to DynamoDB 
+// note this will potentially make several calls to DynamoDB
 // in order to load all results
 Account
   .scan()
@@ -1017,7 +1025,7 @@ Logging can be enabled to provide detailed information on data being sent and re
 By default logging is turned off.
 
 ```js
-dynamo.log.level('info'); // enabled INFO log level 
+dynamo.log.level('info'); // enabled INFO log level
 ```
 
 Logging can also be enabled / disabled at the model level.
