@@ -322,6 +322,8 @@ Account.update({email: 'foo@example.com', name: 'Bar Tester'}, function (err, ac
 
 `Model.update` accepts options to pass to DynamoDB when making the updateItem request
 
+See [AWS SDK - update][7] for list of valid params for options
+
 ```js
 Account.update({email: 'foo@example.com', name: 'Bar Tester'}, {ReturnValues: 'ALL_OLD'}, function (err, acc) {
   console.log('update account', acc.get('name')); // prints the old account name
@@ -427,8 +429,10 @@ BlogPost.destroy({email: 'foo@example.com', title: 'Another Post'}, function (er
 
 `Model.destroy` accepts options to pass to DynamoDB when making the deleteItem request
 
+See [AWS SDK - delete][9] for list of valid params for options
+
 ```js
-Account.destroy('foo@example.com', {ReturnValues: true}, function (err, acc) {
+Account.destroy('foo@example.com', {ReturnValues: ALL_OLD}, function (err, acc) {
   console.log('account deleted');
   console.log('deleted account name', acc.get('name'));
 });
@@ -468,6 +472,8 @@ Account.get('test@example.com', {ConsistentRead: true}, function (err, acc) {
 
 `Model.get` accepts any options that DynamoDB getItem request supports. For
 example:
+
+See [AWS SDK - get][6] for list of valid params for options
 
 ```js
 Account.get('test@example.com', {ConsistentRead: true, AttributesToGet : ['name','age']}, function (err, acc) {
@@ -960,6 +966,8 @@ BlogPost.getItems([postKey1, postKey2], function (err, posts) {
 
 `Model.getItems` accepts options which will be passed to DynamoDB when making the batchGetItem request
 
+See [AWS SDK - batchGet][8] for list of valid params for options
+
 ```js
 // Get both accounts, using a consistent read
 Account.getItems(['foo@example.com','bar@example.com'], {ConsistentRead: true}, function (err, accounts) {
@@ -1107,3 +1115,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [3]: http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html
 [4]: http://aws.typepad.com/aws/2013/05/amazon-dynamodb-parallel-scans-and-other-good-news.html
 [5]: http://aws.amazon.com/dynamodb
+[6]: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property
+[7]: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property
+[8]: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#batchGet-property
+[9]: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#delete-property
