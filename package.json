@@ -24,12 +24,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "async": "1.5.x",
+    "async": "2.6.x",
     "aws-sdk": "^2.186.x",
-    "bunyan": "1.5.x",
-    "joi": "10.6.x",
+    "bunyan": "1.8.x",
+    "joi": "14.0.x",
     "lodash": "4.x.x",
-    "node-uuid": "1.4.x"
+    "uuid": "3.3.x"
   },
   "devDependencies": {
     "chai": "1.x.x",
