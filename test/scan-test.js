@@ -216,7 +216,10 @@ describe('Scan', function () {
         indexes : [{ hashKey : 'name', rangeKey : 'created', type : 'local', name : 'CreatedIndex'}]
       };
 
-      table.schema = new Schema(config);
+      const localTable = {
+        ...table,
+        schema: new Schema(config),
+      };
 
       var query = new Scan('tim', table, serializer).usingIndex('CreatedIndex');
 
