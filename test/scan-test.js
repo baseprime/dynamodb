@@ -202,6 +202,27 @@ describe('Scan', function () {
     });
   });
 
+  describe('#usingIndex', function () {
+
+    it('should set the index name to use', function () {
+      var config = {
+        hashKey: 'name',
+        rangeKey: 'email',
+        schema : {
+          name : Joi.string(),
+          email : Joi.string(),
+          created : Joi.date()
+        },
+        indexes : [{ hashKey : 'name', rangeKey : 'created', type : 'local', name : 'CreatedIndex'}]
+      };
+
+      table.schema = new Schema(config);
+
+      var query = new Scan('tim', table, serializer).usingIndex('CreatedIndex');
+
+      query.request.IndexName.should.equal('CreatedIndex');
+    });
+  });
 
   describe('#where', function () {
     var scan;
