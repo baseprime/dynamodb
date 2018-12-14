@@ -3,6 +3,7 @@
 var helper = require('./test-helper'),
     chai   = require('chai'),
     expect = chai.expect,
+    assert = chai.assert,
     Schema = require('../lib/schema'),
     Item   = require('../lib/item'),
     batch  = require('../lib/batch'),
@@ -80,6 +81,55 @@ describe('Batch', function () {
 
         done();
       });
+    });
+
+    it('should get items by hash key using promises', function (done) {
+      var config = {
+        hashKey: 'email',
+        schema : {
+          email : Joi.string(),
+          name : Joi.string(),
+        }
+      };
+
+      table.schema = new Schema(config);
+
+      var response = {
+        Responses : {
+          accounts : [
+            {email : 'test@test.com', name : 'Tim Tester'},
+            {email : 'foo@example.com', name : 'Foo Bar'}
+          ]
+        }
+      };
+
+      var expectedRequest = {
+        RequestItems : {
+          accounts : {
+            Keys : [
+              {email : 'test@test.com'},
+              {email : 'foo@example.com'}
+            ]
+          }
+        }
+      };
+
+      var item1 = {email: 'test@test.com', name : 'Tim Tester'};
+      table.runBatchGetItems.withArgs(expectedRequest).yields(null, response);
+
+      table.initItem.returns(new Item(item1));
+
+      batch(table, Serializer).getItems(['test@test.com', 'foo@example.com'])
+        .then(function (items) {
+          items.should.have.length(2);
+          items[0].get('email').should.equal('test@test.com');
+
+          done();
+        })
+        .catch(function () {
+          assert(false, 'catch should not be called.');
+          done();
+        });
     });
 
     it('should get items by hash and range key', function (done) {
@@ -303,6 +353,32 @@ describe('Batch', function () {
         expect(table.runBatchGetItems.calledOnce).to.be.true;
         done();
       });
+    });
+
+    it('should promisify an error', function (done) {
+      var config = {
+        hashKey: 'email',
+        schema : {
+          email : Joi.string(),
+          name : Joi.string(),
+        }
+      };
+
+      table.schema = new Schema(config);
+
+      var err = new Error('Error');
+      table.runBatchGetItems.onCall(0).yields(err);
+
+      batch(table, Serializer).getItems(['test@test.com', 'foo@example.com'])
+        .then(function () {
+          assert(false, 'then should not be called');
+          done();
+        })
+        .catch(function (err) {
+          expect(err).to.exist;
+          expect(table.runBatchGetItems.calledOnce).to.be.true;
+          done();
+        });
     });
   });
 

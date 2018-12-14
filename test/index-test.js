@@ -6,6 +6,7 @@ var dynamo = require('../index'),
     Table  = require('../lib/table'),
     chai   = require('chai'),
     expect = chai.expect,
+    assert = chai.assert,
     Joi    = require('joi'),
     sinon  = require('sinon');
 
@@ -202,6 +203,26 @@ describe('dynamo', function () {
         expect(dynamodb.describeTable.calledOnce).to.be.true;
         return done();
       });
+    });
+
+    it('should reject an error with promises', function (done) {
+      var Account = dynamo.define('Account', {hashKey : 'id'});
+
+      var dynamodb = Account.docClient.service;
+      dynamodb.describeTable.onCall(0).yields(null, null);
+
+      dynamodb.createTable.yields(new Error('Fail'), null);
+
+      dynamo.createTables()
+        .then(function () {
+          assert(false, 'then should not be called');
+          done();
+        })
+        .catch(function (err) {
+          expect(err).to.exist;
+          expect(dynamodb.describeTable.calledOnce).to.be.true;
+          return done();
+        });
     });
 
     it('should create model without callback', function (done) {
