@@ -1,6 +1,6 @@
 {
   "name": "dynamodb",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "contributors": [
     "Ryan Fitzgerald <ryan@codebrewstudios.com>",
     "Greg Sabia Tucker <greg@narrowlabs.com>"
@@ -29,7 +29,8 @@
     "bunyan": "1.5.x",
     "joi": "10.6.x",
     "lodash": "4.x.x",
-    "node-uuid": "1.4.x"
+    "node-uuid": "1.4.x",
+    "stream-to-promise": "~2.2.0"
   },
   "devDependencies": {
     "chai": "1.x.x",

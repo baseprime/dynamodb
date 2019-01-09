@@ -11,6 +11,7 @@ var helper = require('./test-helper'),
     realSerializer = require('../lib/serializer'),
     chai   = require('chai'),
     expect = chai.expect,
+    assert = chai.assert,
     sinon  = require('sinon');
 
 chai.should();
@@ -58,6 +59,39 @@ describe('table', function () {
 
         done();
       });
+    });
+
+    it('should get item by hash key with a promise', function (done) {
+      var config = {
+        hashKey: 'email'
+      };
+
+      var s = new Schema(config);
+
+      table = new Table('accounts', s, realSerializer, docClient, logger);
+
+      var request = {
+        TableName: 'accounts',
+        Key : { email : 'test@test.com'}
+      };
+
+      var resp = {
+        Item : {email: 'test@test.com', name: 'test dude'}
+      };
+
+      docClient.get.withArgs(request).yields(null, resp);
+
+      table.get('test@test.com')
+        .then(function (account) {
+          account.should.be.instanceof(Item);
+          account.get('email').should.equal('test@test.com');
+          account.get('name').should.equal('test dude');
+
+          done();
+        })
+        .catch(function () {
+          assert(false, 'catch should not be called');
+        });
     });
 
     it('should get item by hash and range key', function (done) {
@@ -808,7 +842,7 @@ describe('table', function () {
       });
     });
 
-    it('should update valid item without a callback', function (done) {
+    it('should update valid item with a promise', function (done) {
       var config = {
         hashKey: 'email',
         schema : {
@@ -841,10 +875,12 @@ describe('table', function () {
       docClient.update.withArgs(request).yields(null, {Attributes: returnedAttributes});
 
       var item = {email : 'test@test.com', name : 'Tim Test', age : 23};
-      table.update(item);
+      table.update(item)
+        .then(function () {
+          docClient.update.calledWith(request);
 
-      docClient.update.calledWith(request);
-      return done();
+          done();
+        });
     });
 
     it('should return error', function (done) {
@@ -870,6 +906,35 @@ describe('table', function () {
         expect(account).to.not.exist;
         done();
       });
+    });
+
+    it('should reject an error with a promise', function (done) {
+      var config = {
+        hashKey: 'email',
+        schema : {
+          email : Joi.string(),
+          name  : Joi.string(),
+          age   : Joi.number(),
+        }
+      };
+
+      var s = new Schema(config);
+
+      table = new Table('accounts', s, realSerializer, docClient, logger);
+
+      docClient.update.yields(new Error('Fail'));
+
+      var item = {email : 'test@test.com', name : 'Tim Test', age : 23};
+
+      table.update(item)
+        .then(function () {
+          assert(false, 'then should not be called');
+          done();
+        })
+        .catch(function (err) {
+          expect(err).to.exist;
+          done();
+        });
     });
 
   });
@@ -1153,7 +1218,7 @@ describe('table', function () {
       });
     });
 
-    it('should call delete item without callback', function (done) {
+    it('should call delete item with a promise', function (done) {
       var config = {
         hashKey: 'email',
         schema : {
@@ -1175,11 +1240,12 @@ describe('table', function () {
       };
 
       docClient.delete.yields(null, {});
-      table.destroy('test@test.com');
+      table.destroy('test@test.com')
+        .then(function () {
+          docClient.delete.calledWith(request);
 
-      docClient.delete.calledWith(request);
-
-      return done();
+          done();
+        });
     });
 
     it('should call delete item with hash key, options and no callback', function (done) {
@@ -1518,17 +1584,24 @@ describe('table', function () {
       });
     });
 
-    it('should make update table request without callback', function (done) {
+    it('should make update table request with a promise', function (done) {
       var request = {
         TableName: 'accounts',
         ProvisionedThroughput: { ReadCapacityUnits: 2, WriteCapacityUnits: 1 }
       };
 
-      table.updateTable({readCapacity: 2, writeCapacity: 1});
+      dynamodb.describeTable.yields(null, {});
+      dynamodb.updateTable.yields(null, {});
 
-      dynamodb.updateTable.calledWith(request).should.be.true;
-
-      return done();
+      table.updateTable({readCapacity: 2, writeCapacity: 1})
+        .then(function () {
+          dynamodb.updateTable.calledWith(request).should.be.true;
+          done();
+        })
+        .catch(function () {
+          assert(false, 'catch should not be called.');
+          done();
+        });
     });
   });
 
@@ -1562,16 +1635,23 @@ describe('table', function () {
       });
     });
 
-    it('should make delete table request without callback', function (done) {
+    it('should make delete table request with a promise', function (done) {
       var request = {
         TableName: 'accounts',
       };
 
-      table.deleteTable();
+      dynamodb.deleteTable.yields(null, {});
 
-      dynamodb.deleteTable.calledWith(request).should.be.true;
+      table.deleteTable()
+        .then(function () {
+          dynamodb.deleteTable.calledWith(request).should.be.true;
 
-      return done();
+          done();
+        })
+        .catch(function () {
+          assert(false, 'catch should not be called.');
+          done();
+        });
     });
   });
 
