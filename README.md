@@ -92,6 +92,7 @@ var BlogPost = dynamo.define('BlogPost', {
 ### Create Tables for all defined modules
 
 ```js
+// callback
 dynamo.createTables(function(err) {
   if (err) {
     console.log('Error creating tables: ', err);
@@ -99,6 +100,14 @@ dynamo.createTables(function(err) {
     console.log('Tables has been created');
   }
 });
+
+// async/await (Promise)
+try {
+  await dynamo.createTables();
+  console.log('Tables have been created');
+} catch ( err ) {
+  console.log('Error creating tables: ', err)
+}
 ```
 
 When creating tables you can pass specific throughput settings for any defined models.
@@ -269,8 +278,8 @@ hashkeys.
 
 ```js
 BlogPost.create({
-  email: 'werner@example.com', 
-  title: 'Expanding the Cloud', 
+  email: 'werner@example.com',
+  title: 'Expanding the Cloud',
   content: 'Today, we are excited to announce the limited preview...'
   }, function (err, post) {
     console.log('created blog post', post.get('title'));
@@ -658,7 +667,7 @@ var GameScore = dynamo.define('GameScore', {
 });
 ```
 
-Now we can query against the global index 
+Now we can query against the global index
 
 ```js
 GameScore
@@ -670,7 +679,7 @@ GameScore
 
 When can also configure the attributes projected into the index.
 By default all attributes will be projected when no Projection parameter is
-present 
+present
 
 ```js
 var GameScore = dynamo.define('GameScore', {
@@ -769,7 +778,7 @@ This api is very similar to the query api.
 Account.scan().exec(callback);
 
 // scan all accounts, this time loading all results
-// note this will potentially make several calls to DynamoDB 
+// note this will potentially make several calls to DynamoDB
 // in order to load all results
 Account
   .scan()
@@ -1017,7 +1026,7 @@ Logging can be enabled to provide detailed information on data being sent and re
 By default logging is turned off.
 
 ```js
-dynamo.log.level('info'); // enabled INFO log level 
+dynamo.log.level('info'); // enabled INFO log level
 ```
 
 Logging can also be enabled / disabled at the model level.
