@@ -92,7 +92,6 @@ var BlogPost = dynamo.define('BlogPost', {
 ### Create Tables for all defined modules
 
 ```js
-// callback
 dynamo.createTables(function(err) {
   if (err) {
     console.log('Error creating tables: ', err);
@@ -100,14 +99,6 @@ dynamo.createTables(function(err) {
     console.log('Tables has been created');
   }
 });
-
-// async/await (Promise)
-try {
-  await dynamo.createTables();
-  console.log('Tables have been created');
-} catch ( err ) {
-  console.log('Error creating tables: ', err)
-}
 ```
 
 When creating tables you can pass specific throughput settings for any defined models.
@@ -267,10 +258,24 @@ Account.create({email: 'foo@example.com', name: 'Foo Bar', age: 21}, function (e
 You can also first instantiate a model and then save it.
 
 ```js
+// callbacks
 var acc = new Account({email: 'test@example.com', name: 'Test Example'});
 acc.save(function (err) {
-  console.log('created account in DynamoDB', acc.get('email'));
+  if( err ) {
+    console.log('error in saving account', err);
+  } else {
+    console.log('created account in DynamoDB', acc.get('email'));
+  }
 });
+
+// async/await (Promise)
+try {
+  var acc = new Account({email: 'test@example.com', name: 'Test Example'});
+  await acc.save();
+  console.log('created account in DynamoDB', acc.get('email'))
+} catch( err ) {
+  console.log('error in saving account', err);
+}
 ```
 
 Saving models that require range and hashkeys are identical to ones with only
