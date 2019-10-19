@@ -728,7 +728,7 @@ First, define a model using a local secondary index
 ```js
 var BlogPost = dynamo.define('Account', {
   hashKey : 'email',
-  rangekey : 'title',
+  rangeKey : 'title',
   schema : {
     email             : Joi.string().email(),
     title             : Joi.string(),
@@ -737,7 +737,7 @@ var BlogPost = dynamo.define('Account', {
   },
 
   indexes : [{
-    hashkey : 'email', rangekey : 'PublishedDateTime', type : 'local', name : 'PublishedIndex'
+    hashKey : 'email', rangeKey : 'PublishedDateTime', type : 'local', name : 'PublishedIndex'
   }]
 });
 ```
