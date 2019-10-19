@@ -258,10 +258,24 @@ Account.create({email: 'foo@example.com', name: 'Foo Bar', age: 21}, function (e
 You can also first instantiate a model and then save it.
 
 ```js
+// callbacks
 var acc = new Account({email: 'test@example.com', name: 'Test Example'});
 acc.save(function (err) {
-  console.log('created account in DynamoDB', acc.get('email'));
+  if( err ) {
+    console.log('error in saving account', err);
+  } else {
+    console.log('created account in DynamoDB', acc.get('email'));
+  }
 });
+
+// async/await (Promise)
+try {
+  var acc = new Account({email: 'test@example.com', name: 'Test Example'});
+  await acc.save();
+  console.log('created account in DynamoDB', acc.get('email'))
+} catch( err ) {
+  console.log('error in saving account', err);
+}
 ```
 
 Saving models that require range and hashkeys are identical to ones with only
@@ -269,8 +283,8 @@ hashkeys.
 
 ```js
 BlogPost.create({
-  email: 'werner@example.com', 
-  title: 'Expanding the Cloud', 
+  email: 'werner@example.com',
+  title: 'Expanding the Cloud',
   content: 'Today, we are excited to announce the limited preview...'
   }, function (err, post) {
     console.log('created blog post', post.get('title'));
@@ -658,7 +672,7 @@ var GameScore = dynamo.define('GameScore', {
 });
 ```
 
-Now we can query against the global index 
+Now we can query against the global index
 
 ```js
 GameScore
@@ -670,7 +684,7 @@ GameScore
 
 When can also configure the attributes projected into the index.
 By default all attributes will be projected when no Projection parameter is
-present 
+present
 
 ```js
 var GameScore = dynamo.define('GameScore', {
@@ -714,7 +728,7 @@ First, define a model using a local secondary index
 ```js
 var BlogPost = dynamo.define('Account', {
   hashKey : 'email',
-  rangekey : 'title',
+  rangeKey : 'title',
   schema : {
     email             : Joi.string().email(),
     title             : Joi.string(),
@@ -723,7 +737,7 @@ var BlogPost = dynamo.define('Account', {
   },
 
   indexes : [{
-    hashkey : 'email', rangekey : 'PublishedDateTime', type : 'local', name : 'PublishedIndex'
+    hashKey : 'email', rangeKey : 'PublishedDateTime', type : 'local', name : 'PublishedIndex'
   }]
 });
 ```
@@ -769,7 +783,7 @@ This api is very similar to the query api.
 Account.scan().exec(callback);
 
 // scan all accounts, this time loading all results
-// note this will potentially make several calls to DynamoDB 
+// note this will potentially make several calls to DynamoDB
 // in order to load all results
 Account
   .scan()
@@ -1017,7 +1031,7 @@ Logging can be enabled to provide detailed information on data being sent and re
 By default logging is turned off.
 
 ```js
-dynamo.log.level('info'); // enabled INFO log level 
+dynamo.log.level('info'); // enabled INFO log level
 ```
 
 Logging can also be enabled / disabled at the model level.
