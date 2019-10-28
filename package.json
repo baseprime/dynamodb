@@ -29,8 +29,8 @@
     "bunyan": "1.5.x",
     "joi": "10.6.x",
     "lodash": "4.x.x",
-    "node-uuid": "1.4.x",
-    "stream-to-promise": "~2.2.0"
+    "stream-to-promise": "~2.2.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "chai": "1.x.x",
