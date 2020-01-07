@@ -25,19 +25,19 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/joi": "^17.0.2",
-    "async": "1.5.x",
+    "async": "^2.6.3",
     "aws-sdk": "^2.597.0",
-    "bunyan": "1.5.x",
-    "lodash": "4.x.x",
-    "uuid": "^3.3.3",
-    "stream-to-promise": "~2.2.0"
+    "bunyan": "^1.8.12",
+    "lodash": "^4.17.15",
+    "stream-to-promise": "^2.2.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "jshint": "2.x.x",
-    "jshint-stylish": "2.x.x",
-    "mocha": "2.x.x",
-    "sinon": "1.12.x",
+    "jshint": "^2.10.3",
+    "jshint-stylish": "^2.2.1",
+    "mocha": "^7.0.0",
     "nyc": "^15.0.0",
+    "sinon": "^8.0.2"
   }
 }
