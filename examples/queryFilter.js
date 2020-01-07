@@ -3,7 +3,7 @@
 var dynamo = require('../index'),
     util   = require('util'),
     _      = require('lodash'),
-    Joi    = require('joi'),
+    Joi    = require('@hapi/joi'),
     async  = require('async'),
     AWS    = dynamo.AWS;
 

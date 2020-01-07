@@ -6,7 +6,7 @@ var helper = require('./test-helper'),
     _      = require('lodash'),
     chai   = require('chai'),
     expect = chai.expect,
-    Joi    = require('joi');
+    Joi    = require('@hapi/joi');
 
 chai.should();
 

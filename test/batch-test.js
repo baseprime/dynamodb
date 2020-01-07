@@ -8,8 +8,10 @@ var helper = require('./test-helper'),
     Item   = require('../lib/item'),
     batch  = require('../lib/batch'),
     Serializer = require('../lib/serializer'),
-    Joi    = require('joi'),
+    Joi    = require('@hapi/joi'),
     _      = require('lodash');
+
+chai.should();
 
 describe('Batch', function () {
   var serializer,

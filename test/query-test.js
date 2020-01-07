@@ -8,7 +8,7 @@ var helper = require('./test-helper'),
     chai   = require('chai'),
     expect = chai.expect,
     assert = require('assert'),
-    Joi    = require('joi');
+    Joi    = require('@hapi/joi');
 
 chai.should();
 

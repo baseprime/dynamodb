@@ -7,7 +7,7 @@ var dynamo = require('../index'),
     chai   = require('chai'),
     expect = chai.expect,
     assert = chai.assert,
-    Joi    = require('joi'),
+    Joi    = require('@hapi/joi'),
     sinon  = require('sinon');
 
 chai.should();

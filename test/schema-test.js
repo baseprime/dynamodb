@@ -3,7 +3,7 @@
 var Schema = require('../lib/schema'),
     chai   = require('chai'),
     expect = chai.expect,
-    Joi    = require('joi'),
+    Joi    = require('@hapi/joi'),
     _      = require('lodash'),
     sinon  = require('sinon');
 
@@ -67,7 +67,7 @@ describe('schema', function () {
       var s = new Schema(config);
       s.timestamps.should.be.true;
 
-      expect(s._modelSchema.describe().children).to.have.keys(['id', 'createdAt', 'updatedAt']);
+      expect(s._modelSchema.describe().keys).to.have.keys(['id', 'createdAt', 'updatedAt']);
 
       s._modelDatatypes.should.eql({
         id  : 'S',
@@ -90,7 +90,7 @@ describe('schema', function () {
       var s = new Schema(config);
       s.timestamps.should.be.true;
 
-      expect(s._modelSchema.describe().children).to.have.keys(['id', 'created', 'updated']);
+      expect(s._modelSchema.describe().keys).to.have.keys(['id', 'created', 'updated']);
 
       s._modelDatatypes.should.eql({
         id  : 'S',
@@ -112,7 +112,7 @@ describe('schema', function () {
       var s = new Schema(config);
       s.timestamps.should.be.true;
 
-      expect(s._modelSchema.describe().children).to.have.keys(['id', 'createdAt']);
+      expect(s._modelSchema.describe().keys).to.have.keys(['id', 'createdAt']);
 
       s._modelDatatypes.should.eql({
         id  : 'S',
@@ -133,7 +133,7 @@ describe('schema', function () {
       var s = new Schema(config);
       s.timestamps.should.be.true;
 
-      expect(s._modelSchema.describe().children).to.have.keys(['id', 'updatedAt']);
+      expect(s._modelSchema.describe().keys).to.have.keys(['id', 'updatedAt']);
 
       s._modelDatatypes.should.eql({
         id  : 'S',
@@ -155,7 +155,7 @@ describe('schema', function () {
       var s = new Schema(config);
       s.timestamps.should.be.true;
 
-      expect(s._modelSchema.describe().children).to.have.keys(['id', 'fooCreate']);
+      expect(s._modelSchema.describe().keys).to.have.keys(['id', 'fooCreate']);
 
       s._modelDatatypes.should.eql({
         id  : 'S',
@@ -221,7 +221,7 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/"hashKey" must be one of \[context:hashKey\]/);
+      }).to.throw(/hashKey" must be \[ref:global:hashKey\]/);
     });
 
     it('should setup global index', function () {
@@ -247,15 +247,18 @@ describe('schema', function () {
 
       expect(function () {
         new Schema(config);
-      }).to.throw(/"hashKey" is required/);
+      }).to.throw(/hashKey" is required/);
     });
 
     it('should parse schema data types', function () {
+      const now = () => Date.now();
+      now.description = 'Using Date.now()';
+
       var config = {
         hashKey : 'foo',
         schema : Joi.object().keys({
           foo  : Joi.string().default('foobar'),
-          date : Joi.date().default(Date.now, 'Using Date.now()'),
+          date : Joi.date().default(now),
           count: Joi.number(),
           flag: Joi.boolean(),
           nums : Joi.array().items(Joi.number()).meta({dynamoType : 'NS'}),
@@ -400,7 +403,7 @@ describe('schema', function () {
 
       var s = new Schema(config);
 
-      expect(s.validate({email: 'foo@bar.com'}).error).to.be.null;
+      expect(s.validate({email: 'foo@bar.com'}).error).to.be.undefined;
     });
 
     it('should return no error for valid date object', function() {
@@ -413,8 +416,8 @@ describe('schema', function () {
 
       var s = new Schema(config);
 
-      expect(s.validate({created: new Date()}).error).to.be.null;
-      expect(s.validate({created: Date.now()}).error).to.be.null;
+      expect(s.validate({created: new Date()}).error).to.be.undefined;
+      expect(s.validate({created: Date.now()}).error).to.be.undefined;
     });
 
   });
@@ -442,14 +445,20 @@ describe('schema', function () {
     it('should return result of default functions', function () {
       var clock = sinon.useFakeTimers(Date.now());
 
+      const now = () => Date.now();
+      now.description = 'Date.now()';
+
+      const constant = _.constant('foo bar');
+      constant.description = 'using constant';
+
       var config = {
         hashKey : 'email',
         schema : {
           email   : Joi.string(),
-          created : Joi.date().default(Date.now, 'Data.now()'),
+          created : Joi.date().default(now),
           data : {
             name : Joi.string().default('Tim Tester'),
-            nick : Joi.string().default(_.constant('foo bar'), 'using constant')
+            nick : Joi.string().default(constant)
           }
         }
       };

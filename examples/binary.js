@@ -3,7 +3,7 @@
 var dynamo = require('../index'),
     fs     = require('fs'),
     AWS    = dynamo.AWS,
-    Joi    = require('joi');
+    Joi    = require('@hapi/joi');
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');
 

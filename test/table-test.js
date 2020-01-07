@@ -2,7 +2,7 @@
 
 var helper = require('./test-helper'),
     _      = require('lodash'),
-    Joi    = require('joi'),
+    Joi    = require('@hapi/joi'),
     Table  = require('../lib/table'),
     Schema = require('../lib/schema'),
     Query  = require('../lib//query'),
