@@ -26,7 +26,7 @@
   "dependencies": {
     "@hapi/joi": "^17.0.2",
     "async": "1.5.x",
-    "aws-sdk": "^2.186.x",
+    "aws-sdk": "^2.597.0",
     "bunyan": "1.5.x",
     "lodash": "4.x.x",
     "uuid": "^3.3.3",
