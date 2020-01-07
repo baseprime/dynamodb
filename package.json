@@ -29,7 +29,7 @@
     "aws-sdk": "^2.186.x",
     "bunyan": "1.5.x",
     "lodash": "4.x.x",
-    "node-uuid": "1.4.x",
+    "uuid": "^3.3.3",
     "stream-to-promise": "~2.2.0"
   },
   "devDependencies": {

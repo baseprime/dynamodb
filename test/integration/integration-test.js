@@ -6,7 +6,7 @@ var dynamo = require('../../index'),
     async  = require('async'),
     _      = require('lodash'),
     helper = require('../test-helper'),
-    uuid   = require('node-uuid'),
+    uuidv4 = require('uuid/v4'),
     Joi    = require('@hapi/joi');
 
 chai.should();
@@ -75,7 +75,7 @@ describe('DynamoDB Integration Tests', function() {
 
   before(function (done) {
 
-    const generateId = () => uuid.v4();
+    const generateId = () => uuidv4();
     generateId.description = 'uuid.v4';
 
     const now = () => Date.now();
