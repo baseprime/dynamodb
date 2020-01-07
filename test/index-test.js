@@ -29,7 +29,7 @@ describe('dynamo', function () {
       };
 
       var model = dynamo.define('Account', config);
-      expect(model).to.not.be.nil;
+      expect(model).to.not.be.null;
     });
 
     it('should throw when using old api', function () {

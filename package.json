@@ -33,7 +33,7 @@
     "stream-to-promise": "~2.2.0"
   },
   "devDependencies": {
-    "chai": "1.x.x",
+    "chai": "^4.2.0",
     "istanbul": "^0.3.5",
     "jscoverage": "^0.5.9",
     "jshint": "2.x.x",

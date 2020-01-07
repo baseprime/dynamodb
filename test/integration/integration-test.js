@@ -410,7 +410,7 @@ describe('DynamoDB Integration Tests', function() {
       };
 
       Movie.update({title : 'Movie 0', description : 'This is a description'}, params, function (err, mov) {
-        expect(err).to.not.exist();
+        expect(err).to.not.exist;
 
         expect(mov.get('description')).to.eql('This is a description');
         expect(mov.get('releaseYear')).to.eql(2002);
@@ -506,7 +506,7 @@ describe('DynamoDB Integration Tests', function() {
         _.each(data.Items, function (t) {
           expect(t.get('UserId')).to.eql('userid-1');
 
-          var published = t.get('PublishedDateTime');
+          var published = new Date(t.get('PublishedDateTime'));
 
           if(prev) {
             expect(published).to.be.at.most(prev);
@@ -534,7 +534,7 @@ describe('DynamoDB Integration Tests', function() {
         _.each(data.Items, function (t) {
           expect(t.get('UserId')).to.eql('userid-1');
 
-          var published = t.get('PublishedDateTime');
+          var published = new Date(t.get('PublishedDateTime'));
 
           if(prev) {
             expect(published).to.be.at.most(prev);
@@ -559,7 +559,7 @@ describe('DynamoDB Integration Tests', function() {
           expect(t.get('UserId')).to.eql('userid-1');
           expect(t.get('num')).to.be.above(3);
           expect(t.get('num')).to.be.below(9);
-          expect(t.get('tag')).to.exist();
+          expect(t.get('tag')).to.exist;
         });
 
         return done();
@@ -575,7 +575,7 @@ describe('DynamoDB Integration Tests', function() {
 
           _.each(data.Items, function (t) {
             expect(t.get('UserId')).to.eql('userid-1');
-            expect(t.get('tag')).to.exist();
+            expect(t.get('tag')).to.exist;
           });
 
           return done();
@@ -612,7 +612,7 @@ describe('DynamoDB Integration Tests', function() {
           expect(t.get('UserId')).to.eql('userid-1');
           expect(t.get('num')).to.be.above(3);
           expect(t.get('num')).to.be.below(9);
-          expect(t.get('tag')).to.exist();
+          expect(t.get('tag')).to.exist;
         });
 
         return done();
