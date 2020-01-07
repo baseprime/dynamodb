@@ -19,17 +19,6 @@ test-integration: lint
 		--ui bdd \
 		test/integration/*-test.js
 
-test-cov: lint
-	@node_modules/.bin/mocha \
-		-r jscoverage \
-		$(TESTSRC)
-
-test-cov-html: lint
-	@node_modules/.bin/mocha \
-		-r jscoverage \
-		--covout=html \
-		$(TESTSRC)
-
 coverage: lint
 	@node_modules/.bin/nyc --reporter=lcov --reporter=text node_modules/mocha/bin/_mocha $(TESTSRC)
 	@node_modules/.bin/nyc check-coverage --statements 100 --functions 100 --branches 100 --lines 100

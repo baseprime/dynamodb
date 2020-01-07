@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "jscoverage": "^0.5.9",
     "jshint": "2.x.x",
     "jshint-stylish": "2.x.x",
     "mocha": "2.x.x",
