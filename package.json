@@ -25,12 +25,12 @@
   "license": "MIT",
   "dependencies": {
     "async": "1.5.x",
-    "aws-sdk": "^2.186.x",
-    "bunyan": "1.5.x",
+    "aws-sdk": "^2.648.x",
+    "bunyan": "1.8.x",
     "joi": "10.6.x",
     "lodash": "4.x.x",
-    "node-uuid": "1.4.x",
-    "stream-to-promise": "~2.2.0"
+    "stream-to-promise": "~2.2.0",
+    "uuid": "7.0.x"
   },
   "devDependencies": {
     "chai": "1.x.x",
