@@ -4,7 +4,7 @@ var expressions = require('../lib/expressions'),
     chai        = require('chai'),
     expect      = chai.expect,
     Schema      = require('../lib/schema'),
-    Joi         = require('@hapi/joi');
+    Joi         = require('joi');
     //_         = require('lodash');
 
 chai.should();

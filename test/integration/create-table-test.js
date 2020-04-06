@@ -6,7 +6,7 @@ var dynamo = require('../../index'),
     //async  = require('async'),
     _      = require('lodash'),
     helper = require('../test-helper'),
-    Joi    = require('@hapi/joi');
+    Joi    = require('joi');
 
 chai.should();
 

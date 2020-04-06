@@ -8,7 +8,7 @@ var Table  = require('../lib/table'),
     assert = require('assert'),
     helper = require('./test-helper'),
     serializer = require('../lib/serializer'),
-    Joi    = require('@hapi/joi');
+    Joi    = require('joi');
 
 chai.should();
 

@@ -5,7 +5,7 @@ var serializer = require('../lib/serializer'),
     expect     = chai.expect,
     Schema     = require('../lib/schema'),
     helper     = require('./test-helper'),
-    Joi        = require('@hapi/joi');
+    Joi        = require('joi');
 
 chai.should();
 

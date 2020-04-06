@@ -3,7 +3,7 @@
 var Schema = require('../lib/schema'),
     chai   = require('chai'),
     expect = chai.expect,
-    Joi    = require('@hapi/joi'),
+    Joi    = require('joi'),
     _      = require('lodash'),
     sinon  = require('sinon');
 

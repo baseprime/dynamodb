@@ -1,7 +1,7 @@
 'use strict';
 
 var dynamo = require('../index'),
-    Joi    = require('@hapi/joi'),
+    Joi    = require('joi'),
     AWS    = dynamo.AWS;
 
 AWS.config.loadFromPath(process.env.HOME + '/.ec2/credentials.json');

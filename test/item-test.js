@@ -8,7 +8,7 @@ var Item   = require('../lib/item'),
     assert = chai.assert,
     helper = require('./test-helper'),
     serializer = require('../lib/serializer'),
-    Joi    = require('@hapi/joi');
+    Joi    = require('joi');
 
 chai.should();
 
