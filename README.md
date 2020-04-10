@@ -12,7 +12,7 @@
 
 ## Installation
 
-    npm install dynamodb
+    npm install dynamodb joi -S
 
 ## Getting Started
 First, you need to configure the [AWS SDK][2] with your credentials.
@@ -55,6 +55,8 @@ Currently the following region codes are available in Amazon:
 Models are defined through the toplevel define method.
 
 ```js
+var Joi = require('joi');
+
 var Account = dynamo.define('Account', {
   hashKey : 'email',
 
