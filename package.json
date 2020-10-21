@@ -5,7 +5,7 @@
     "Ryan Fitzgerald <ryan@codebrewstudios.com>",
     "Greg Sabia Tucker <greg@narrowlabs.com>"
   ],
-  "description": "DynamoDB data mapper for node.js with bunyan-lite",
+  "description": "DynamoDB data mapper for node.js without dtrace (via bunyan)",
   "main": "index.js",
   "scripts": {
     "test": "make test",
@@ -26,7 +26,7 @@
   "dependencies": {
     "async": "1.5.x",
     "aws-sdk": "^2.186.x",
-    "@scaffoldly/bunyan": "1.8.15",
+    "bunyan": "npm:@scaffoldly/bunyan@^1.8.15",
     "joi": "10.6.x",
     "lodash": "4.x.x",
     "node-uuid": "1.4.x",
