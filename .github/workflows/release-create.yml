@@ -3,14 +3,14 @@ on:
   release:
     types: [created]
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2-beta
         with:
-          node-version: '12'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "12"
+          registry-url: "https://registry.npmjs.org"
       - run: npm install
       - run: npm publish --access public
         env:

@@ -11,7 +11,6 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: "12"
-      - run: npm install
       - uses: "phips28/gh-action-bump-version@v7.1.0"
         with:
           tag-prefix: ""
