@@ -1,11 +1,11 @@
 {
-  "name": "dynamodb",
+  "name": "@scaffoldly/dynamodb",
   "version": "1.2.1",
   "contributors": [
     "Ryan Fitzgerald <ryan@codebrewstudios.com>",
     "Greg Sabia Tucker <greg@narrowlabs.com>"
   ],
-  "description": "DynamoDB data mapper for node.js",
+  "description": "DynamoDB data mapper for node.js with bunyan-lite",
   "main": "index.js",
   "scripts": {
     "test": "make test",
@@ -26,7 +26,7 @@
   "dependencies": {
     "async": "1.5.x",
     "aws-sdk": "^2.186.x",
-    "bunyan": "1.5.x",
+    "bunyan-lite": "1.0.1",
     "joi": "10.6.x",
     "lodash": "4.x.x",
     "node-uuid": "1.4.x",

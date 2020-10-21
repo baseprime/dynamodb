@@ -4,7 +4,7 @@ var sinon  = require('sinon'),
     AWS    = require('aws-sdk'),
     Table  = require('../lib/table'),
     _      = require('lodash'),
-    bunyan = require('bunyan');
+    bunyan = require('bunyan-lite');
 
 exports.mockDynamoDB = function () {
   var opts = { endpoint : 'http://localhost:8000', region: 'us-west-2', apiVersion: '2012-08-10' };
