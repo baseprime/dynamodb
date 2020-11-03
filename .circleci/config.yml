@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:6
-      - image: cimg/openjdk:15.0.1
+      - image: circleci/dynamodb
     working_directory: ~/repo
     steps:
       - checkout
@@ -16,4 +16,4 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm run test-standalone
+      - run: npm run test
