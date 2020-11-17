@@ -1,6 +1,6 @@
 {
   "name": "dynamodb",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "contributors": [
     "Ryan Fitzgerald <ryan@codebrewstudios.com>",
     "Greg Sabia Tucker <greg@narrowlabs.com>"
@@ -9,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "test": "make test",
+    "test-standalone": "npm run dynamodb-local & sleep 10 && npm test",
     "dynamodb-local": "./test/bin/dynamodb-local"
   },
   "repository": "git://github.com/baseprime/dynamodb.git",
@@ -20,25 +21,24 @@
     "nosql"
   ],
   "engines": {
-    "node": ">=0.10.30"
+    "node": ">=10.0.0"
   },
   "license": "MIT",
   "dependencies": {
-    "async": "1.5.x",
-    "aws-sdk": "^2.186.x",
-    "bunyan": "1.5.x",
-    "joi": "10.6.x",
-    "lodash": "4.x.x",
-    "node-uuid": "1.4.x",
-    "stream-to-promise": "~2.2.0"
+    "joi": "^17.2.1",
+    "async": "^2.6.3",
+    "aws-sdk": "^2.756.0",
+    "bunyan": "^1.8.14",
+    "lodash": "^4.17.20",
+    "stream-to-promise": "^2.2.0",
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
-    "chai": "1.x.x",
-    "istanbul": "^0.3.5",
-    "jscoverage": "^0.5.9",
-    "jshint": "2.x.x",
-    "jshint-stylish": "2.x.x",
-    "mocha": "2.x.x",
-    "sinon": "1.12.x"
+    "chai": "^4.2.0",
+    "jshint": "^2.12.0",
+    "jshint-stylish": "^2.2.1",
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0",
+    "sinon": "^9.0.3"
   }
 }

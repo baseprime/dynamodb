@@ -11,6 +11,8 @@ var helper = require('./test-helper'),
     Joi    = require('joi'),
     _      = require('lodash');
 
+chai.should();
+
 describe('Batch', function () {
   var serializer,
       table;
