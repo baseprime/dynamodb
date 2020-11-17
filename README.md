@@ -1080,7 +1080,7 @@ See the [examples][0] for more working sample code.
 DynamoDB is provided as-is, free of charge. For support, you have a few choices:
 
 - Ask your support question on [Stackoverflow.com](http://stackoverflow.com), and tag your question with **dynamodb**.
-- If you believe you have found a bug in dynamodb, please submit a support ticket on the [Github Issues page for dynamo](http://github.com/baseprime/dynamo/issues). We'll get to them as soon as we can.
+- If you believe you have found a bug in dynamodb, please submit a support ticket on the [Github Issues page for dynamo](http://github.com/baseprime/dynamodb/issues). We'll get to them as soon as we can.
 
 ### Maintainers
 
