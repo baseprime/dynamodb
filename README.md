@@ -39,17 +39,25 @@ dynamo.AWS.config.update({accessKeyId: 'AKID', secretAccessKey: 'SECRET', region
 
 Currently the following region codes are available in Amazon:
 
-|      Code      |           Name           |
-| -------------- | ------------------------ |
-| ap-northeast-1 | Asia Pacific (Tokyo)     |
-| ap-southeast-1 | Asia Pacific (Singapore) |
-| ap-southeast-2 | Asia Pacific (Sydney)    |
-| eu-central-1   | EU (Frankfurt)           |
-| eu-west-1      | EU (Ireland)             |
-| sa-east-1      | South America (Sao Paulo)|
-| us-east-1      | US East (N. Virginia)    |
-| us-west-1      | US West (N. California)  |
-| us-west-2      | US West (Oregon)         |
+|      Code      |           Name            |
+| -------------- | ------------------------- |
+| ap-northeast-1 | Asia Pacific (Tokyo)      |
+| ap-northeast-2 | Asia Pacific (Seoul)      |
+| ap-northeast-3 | Asia Pacific(Osaka-Local) |
+| ap-southeast-1 | Asia Pacific (Singapore)  |
+| ap-southeast-2 | Asia Pacific (Sydney)     |
+| ap-south-1     | Asia Pacific (Mumbai)     |
+| sa-east-1      | South America (São Paulo) |
+| eu-central-1   | EU (Frankfurt)            |
+| ca-central-1   | Canada (Central)          |
+| eu-west-1      | EU (Ireland)              |
+| eu-west-2      | EU (London)               |
+| eu-west-3      | EU (Paris)                |
+| sa-east-1      | South America (Sao Paulo) |
+| us-east-1      | US East (N. Virginia)     |
+| us-east-2      | US East (Ohio)            |
+| us-west-1      | US West (N. California)   |
+| us-west-2      | US West (Oregon)          |
 
 ### Define a Model
 Models are defined through the toplevel define method.
