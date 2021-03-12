@@ -6,7 +6,7 @@ var dynamo = require('../../index'),
     async  = require('async'),
     _      = require('lodash'),
     helper = require('../test-helper'),
-    uuid   = require('node-uuid'),
+    { v4: uuidv4 } = require('uuid'),
     Joi    = require('joi');
 
 chai.should();
@@ -75,16 +75,18 @@ describe('DynamoDB Integration Tests', function() {
 
   before(function (done) {
 
-    function generateId () {
-      return uuid.v4();
-    }
+    const generateId = () => uuidv4();
+    generateId.description = 'uuid.v4';
+
+    const now = () => Date.now();
+    now.description = 'Date.now()';
 
     dynamo.dynamoDriver(helper.realDynamoDB());
 
     User = dynamo.define('dynamo-int-test-user', {
       hashKey : 'id',
       schema : {
-        id            : Joi.string().default(generateId, 'uuid.v4'),
+        id            : Joi.string().default(generateId),
         email         : Joi.string().required(),
         name          : Joi.string().allow(''),
         age           : Joi.number().min(10),
@@ -109,7 +111,7 @@ describe('DynamoDB Integration Tests', function() {
         content           : Joi.string(),
         num               : Joi.number(),
         tag               : Joi.string(),
-        PublishedDateTime : Joi.date().default(Date.now, 'Date.now()')
+        PublishedDateTime : Joi.date().default(now)
       },
       indexes : [
         { hashKey : 'UserId', rangeKey : 'PublishedDateTime', type : 'local', name : 'PublishedDateTimeIndex'}
@@ -408,7 +410,7 @@ describe('DynamoDB Integration Tests', function() {
       };
 
       Movie.update({title : 'Movie 0', description : 'This is a description'}, params, function (err, mov) {
-        expect(err).to.not.exist();
+        expect(err).to.not.exist;
 
         expect(mov.get('description')).to.eql('This is a description');
         expect(mov.get('releaseYear')).to.eql(2002);
@@ -504,7 +506,7 @@ describe('DynamoDB Integration Tests', function() {
         _.each(data.Items, function (t) {
           expect(t.get('UserId')).to.eql('userid-1');
 
-          var published = t.get('PublishedDateTime');
+          var published = new Date(t.get('PublishedDateTime'));
 
           if(prev) {
             expect(published).to.be.at.most(prev);
@@ -532,7 +534,7 @@ describe('DynamoDB Integration Tests', function() {
         _.each(data.Items, function (t) {
           expect(t.get('UserId')).to.eql('userid-1');
 
-          var published = t.get('PublishedDateTime');
+          var published = new Date(t.get('PublishedDateTime'));
 
           if(prev) {
             expect(published).to.be.at.most(prev);
@@ -557,7 +559,7 @@ describe('DynamoDB Integration Tests', function() {
           expect(t.get('UserId')).to.eql('userid-1');
           expect(t.get('num')).to.be.above(3);
           expect(t.get('num')).to.be.below(9);
-          expect(t.get('tag')).to.exist();
+          expect(t.get('tag')).to.exist;
         });
 
         return done();
@@ -573,7 +575,7 @@ describe('DynamoDB Integration Tests', function() {
 
           _.each(data.Items, function (t) {
             expect(t.get('UserId')).to.eql('userid-1');
-            expect(t.get('tag')).to.exist();
+            expect(t.get('tag')).to.exist;
           });
 
           return done();
@@ -610,7 +612,7 @@ describe('DynamoDB Integration Tests', function() {
           expect(t.get('UserId')).to.eql('userid-1');
           expect(t.get('num')).to.be.above(3);
           expect(t.get('num')).to.be.below(9);
-          expect(t.get('tag')).to.exist();
+          expect(t.get('tag')).to.exist;
         });
 
         return done();

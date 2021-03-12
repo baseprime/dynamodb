@@ -502,6 +502,30 @@ describe('Serializer', function () {
       item.data.nicks.values.should.eql(stringSet.values);
     });
 
+    it('should serialize arrays', function () {
+      var config = {
+        hashKey: 'foo',
+        schema: {
+          numbers: Joi.array().items(Joi.number().required()).required(),
+          strings: Joi.array().items(Joi.string().required()).required(),
+          objects: Joi.array().items(Joi.object().keys({
+            number: Joi.number().required(),
+            string: Joi.string().required(),
+          }))
+        }
+      };
+
+      const schema = new Schema(config);
+      const item = serializer.serializeItem(schema, {
+        numbers: [2, 4, 6, 8], 
+        strings: ['a', 'b', 'c'],
+        objects: [{number: 10, string: 'd'}],
+      });
+
+      item.numbers.should.eql([2, 4, 6, 8]);
+      item.strings.should.eql(['a', 'b', 'c']);
+      item.objects.should.eql([{number: 10, string: 'd'}]);
+    });
 
     it('should return empty when serializing null value', function () {
       var config = {
