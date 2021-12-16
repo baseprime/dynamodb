@@ -551,7 +551,7 @@ BlogPost
   .select('COUNT')
   .exec(callback);
 
-// only return title and content attributes of 10 blog posts
+// Read 10 blog posts and only return title and content attributes of posts
 // that begin with the title Expanding
 BlogPost
   .query('werner@example.com')
