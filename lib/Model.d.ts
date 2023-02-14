@@ -1,4 +1,3 @@
-import * as bunyan from 'bunyan';
 import { DynamoDB } from './DynamoDB';
 
 import { Callback } from './Callback';
@@ -63,7 +62,6 @@ export interface Model<T> {
     tableName(hashKey: string, rangeKey: string, options: any, callback: Callback<any>): void;
     tableName(hashKey: string, rangeKey: string, options: any): Promise<any>;
     itemFactory: Model<T>;
-    log: bunyan;
     after: any;
     before: any;
     config(config: { dynamodb?: DynamoDB; tableName?: string }): any;

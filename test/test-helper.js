@@ -3,8 +3,7 @@
 var sinon  = require('sinon'),
     AWS    = require('aws-sdk'),
     Table  = require('../lib/table'),
-    _      = require('lodash'),
-    bunyan = require('bunyan');
+    _      = require('lodash');
 
 exports.mockDynamoDB = function () {
   var opts = { endpoint : 'http://localhost:8000', region: 'us-west-2', apiVersion: '2012-08-10' };
@@ -91,12 +90,4 @@ exports.fakeUUID = function () {
 
 exports.randomName = function (prefix) {
   return prefix + '_' + Date.now() + '.' + _.random(1000);
-};
-
-exports.testLogger = function() {
-  return bunyan.createLogger({
-    name: 'dynamo-tests',
-    serializers : {err: bunyan.stdSerializers.err},
-    level : bunyan.FATAL
-  });
 };

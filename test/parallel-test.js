@@ -26,7 +26,7 @@ describe('ParallelScan', function() {
 
     var schema = new Schema(config);
 
-    table = new Table('mockTable', schema, serializer, helper.mockDynamoDB(), helper.testLogger());
+    table = new Table('mockTable', schema, serializer, helper.mockDynamoDB());
   });
 
   it('should return error', function (done) {

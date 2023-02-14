@@ -27,7 +27,6 @@ describe('table', function () {
     serializer = helper.mockSerializer(),
     docClient = helper.mockDocClient();
     dynamodb = docClient.service;
-    logger = helper.testLogger();
   });
 
   describe('#get', function () {

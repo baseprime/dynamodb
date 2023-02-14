@@ -1,5 +1,4 @@
 import { AnySchema } from 'joi';
-import * as bunyan from 'bunyan';
 import { callbackify } from 'util';
 import { Readable } from 'stream';
 
@@ -38,7 +37,6 @@ export interface DefineConfig<T> {
     };
 }
 
-export const log: bunyan;
 export function dynamoDriver(driver?: DynamoDB): DynamoDB;
 export function documentClient(docClient?: DocumentClient): DocumentClient;
 export function reset(): void;
