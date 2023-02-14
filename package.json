@@ -1,6 +1,6 @@
 {
   "name": "@scaffoldly/dynamodb",
-  "version": "1.3.6-0",
+  "version": "1.3.6",
   "contributors": [
     "Ryan Fitzgerald <ryan@codebrewstudios.com>",
     "Greg Sabia Tucker <greg@narrowlabs.com>"
