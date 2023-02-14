@@ -11,8 +11,10 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: "12"
-      - uses: "phips28/gh-action-bump-version@v7.1.0"
+      - uses: scaffoldly/bump-version-action@v1
         with:
-          tag-prefix: ""
+          action: prerelease
+          version-file: package.json
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
