@@ -12,6 +12,11 @@ jobs:
           node-version: "12"
           registry-url: "https://registry.npmjs.org"
       - run: npm install
+      - uses: scaffoldly/bump-version-action@v1
+        with:
+          action: postrelease
+          version-file: package.json
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
