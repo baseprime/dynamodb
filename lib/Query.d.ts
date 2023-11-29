@@ -19,6 +19,7 @@ export interface Query<T> {
         attributeValues: any;
     }): Query<T>;
     startKey(hashKey: string, rangeKey: string): Query<T>;
+    exlusiveStartKey(key: object): Query<T>;
     attributes(attrs: ReadonlyArray<string> | string): Query<T>;
     ascending(): Query<T>;
     descending(): Query<T>;
